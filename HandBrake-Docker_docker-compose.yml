@@ -1,0 +1,41 @@
+services:
+  handbrake:
+    image: jlesage/handbrake:latest
+    container_name: handbrake
+    restart: unless-stopped
+    ports:
+      - "5800:5800"
+    environment:
+      # --- 基本設定 ---
+      - TZ=Asia/Tokyo
+      - LANG=ja_JP.UTF-8
+      - ENABLE_CJK_FONT=1  # 日本語フォントを有効化
+      
+      # --- ご要望の設定 ---
+      - AUTOMATED_CONVERSION=0 # 自動変換をオフ
+      - WEB_NOTIFICATION=1     # Web通知を有効
+      
+      # --- 権限設定 (必要に応じてIDを調整) ---
+      - USER_ID=1000
+      - GROUP_ID=1000
+
+    volumes:
+      # configはDocker Composeファイルと同じ場所
+      - "./config:/config:rw"
+      # storageはNASのドキュメント
+      - "/mnt/NAS/Documents:/storage:ro"
+      # outputは指定のパス
+      - "/mnt/Linux_Data/swap:/output:rw"
+      # watchは使用しないため記述なし
+
+    devices:
+      # Intel GPU (QSV) 加速を有効化するために必須
+      - "/dev/dri:/dev/dri"
+      
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    container_name: handbrake-tunnel
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=ey~~~~~
