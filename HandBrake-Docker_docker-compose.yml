@@ -11,6 +11,10 @@ services:
       - LANG=ja_JP.UTF-8
       - ENABLE_CJK_FONT=1  # 日本語フォントを有効化
       
+      # --- 解像度設定 ---
+      - DISPLAY_WIDTH=1280
+      - DISPLAY_HEIGHT=1024
+      
       # --- ご要望の設定 ---
       - AUTOMATED_CONVERSION=0 # 自動変換をオフ
       - WEB_NOTIFICATION=1     # Web通知を有効
