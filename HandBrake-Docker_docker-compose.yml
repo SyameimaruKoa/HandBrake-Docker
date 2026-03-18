@@ -14,6 +14,7 @@ services:
       # --- ご要望の設定 ---
       - AUTOMATED_CONVERSION=0 # 自動変換をオフ
       - WEB_NOTIFICATION=1     # Web通知を有効
+      - SECURE_CONNECTION=1  # 通知機能のために必須
       
       # --- 権限設定 (必要に応じてIDを調整) ---
       - USER_ID=1000
